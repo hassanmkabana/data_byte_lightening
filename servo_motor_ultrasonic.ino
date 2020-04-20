@@ -3,9 +3,11 @@
  */
 // include the servo library
   #include <Servo.h>
+  #include <Servo.h>
 // declare the servo pin
  int servoPin = 8;
- int delay_time = 1000;
+ int servoP = 5;
+ int delay_time = 500;
  const int pingPin = 9; // Trigger Pin of Ultrasonic Sensor
  const int echoPin = 10; // Echo Pin of Ultrasonic Sensor
  
@@ -16,6 +18,7 @@
  
    // create a servo object
  Servo servo1;
+ Servo servo2;
 
    void setup() {
     Serial.begin(9600); // starting Serial Terminal
@@ -23,6 +26,7 @@
    pinMode(echoPin, INPUT);
     // we need to attach the servo to the used pin number
     servo1.attach(servoPin);
+    servo2.attach(servoP);
  }
 
 void loop() {
@@ -38,16 +42,30 @@ void loop() {
   // calculate the distance
   distance = duration*0.034/2;
   safetyDistance = distance;
-  if(safetyDistance<=20){
+  if(safetyDistance<=10){
     digitalWrite(servoPin, HIGH);
     servo1.write(0);
+    servo2.write(0);
      delay(delay_time);
   }
   else{
     digitalWrite(servoPin,LOW);
-    servo1.write(90);
+    servo1.write(170);
+    servo2.write(170);
      delay(delay_time);
   }
+
+//  if(safetyDistance<=10){
+//    digitalWrite(servoP, HIGH);
+//    servo1.write(0);
+//     delay(delay_time);
+//  }
+//  else{
+//    digitalWrite(servoP,LOW);
+//    servo1.write(90);
+//     delay(delay_time);
+//  }
+  
   Serial.print("Distance:  ");
   Serial.print(distance);
 }
